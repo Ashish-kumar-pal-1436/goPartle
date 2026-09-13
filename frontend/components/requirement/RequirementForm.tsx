@@ -74,35 +74,28 @@ const handleEventChange = (
 ) => {
 
     setSubmitError("");
-  let details;
-
-  if (category === "planner") {
-    details = {
-      budget: "",
-      guestCount: "",
-      services: [],
-      eventStyle: "",
-    };
-  }
-
-  if (category === "performer") {
-    details = {
-      performanceType: "",
-      genre: "",
-      numberOfPerformers: "",
-      duration: "",
-      budget: "",
-    };
-  }
-
-  if (category === "crew") {
-    details = {
-      crewType: "",
-      numberOfMembers: "",
-      workingHours: "",
-      equipmentRequired: "",
-    };
-  }
+  const details: RequirementFormData["details"] =
+    category === "planner"
+      ? {
+          budget: "",
+          guestCount: "",
+          services: [],
+          eventStyle: "",
+        }
+      : category === "performer"
+        ? {
+            performanceType: "",
+            genre: "",
+            numberOfPerformers: "",
+            duration: "",
+            budget: "",
+          }
+        : {
+            crewType: "",
+            numberOfMembers: "",
+            workingHours: "",
+            equipmentRequired: "",
+          };
 
   setFormData((previous) => ({
     ...previous,
@@ -137,7 +130,7 @@ const handleAdditionalRequirementChange = (
   value: string
 ) => {
 
-    setSubmitError("")
+    setSubmitError("");
   setFormData((previous) => ({
     ...previous,
     additionalRequirements: {
@@ -211,7 +204,12 @@ const validateCurrentStep = () => {
 
   if (currentStep === 2) {
     if (formData.category === "planner") {
-      const details = formData.details;
+      const details = formData.details as {
+        budget: string;
+        guestCount: string;
+        services: string[];
+        eventStyle: string;
+      };
 
       if (!details.budget) {
         return "Planner budget is required.";
@@ -231,7 +229,13 @@ const validateCurrentStep = () => {
     }
 
     if (formData.category === "performer") {
-      const details = formData.details;
+      const details = formData.details as {
+        performanceType: string;
+        genre: string;
+        numberOfPerformers: string;
+        duration: string;
+        budget: string;
+      };
 
       if (!details.performanceType) {
         return "Performance type is required.";
@@ -255,7 +259,12 @@ const validateCurrentStep = () => {
     }
 
     if (formData.category === "crew") {
-      const details = formData.details;
+      const details = formData.details as {
+        crewType: string;
+        numberOfMembers: string;
+        workingHours: string;
+        equipmentRequired: string;
+      };
 
       if (!details.crewType) {
         return "Crew type is required.";
